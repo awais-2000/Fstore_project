@@ -22,11 +22,14 @@ const connectDB = async () => {
     const fetchedData = await mongoose.connection.db.collection('food_items').find({}).toArray(); // (1)
     const foodCategory = await mongoose.connection.db.collection('foodCategory').find({}).toArray(); // (2)
 
+    // console.log("Fetched data ===>")
+    // console.log(fetchedData)
+
     global.food_items = fetchedData; // (3)
     global.foodCategory = foodCategory; // (4)
 
-    console.log('Fetched food_items:', global.food_items); // (5)
-    console.log('Fetched foodCategory:', global.foodCategory); // (6)
+    // console.log('Fetched food_items:', global.food_items); // (5)
+    // console.log('Fetched foodCategory:', global.foodCategory); // (6)
   } catch (error) {
     // If an error occurs during the connection or data fetching, log the error message.
     console.error('Error connecting to MongoDB:', error);

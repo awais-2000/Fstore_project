@@ -3,8 +3,12 @@ const router = express.Router();
 
 router.get('/foodData', (req, res) => { // (7)
     try {
-        console.log(global.food_Items, global.foodCategory) // (8)
-        res.json(global.food_items); // (9)
+        // console.log(global.food_items) // (8)
+        const response = {
+            "categories": global.foodCategory,
+            "items": global.food_items
+        }
+        res.json(response); // (9)
 
     } catch (error) {
 

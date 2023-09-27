@@ -88,101 +88,49 @@ export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
 
-  const loadData = async () => {
-    try {
-      let response = await fetch("http://localhost:5000/api/foodData", {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Food data from API")
-        // console.log(responseData[0], responseData[1]);
-
-        // Set your state variables based on responseData[0] and responseData[1]
-        setFoodCat(responseData[0]);
-        setFoodItem(responseData[1]);
-        console.log("food cat")
-        console.log(foodCat.length)
-        console.log(foodCat)
-        console.log("food cat items")
-        console.log(foodItem.length)
-        console.log(foodItem)
-      } else {
-        console.error('Failed to fetch data');
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }
-
+  console.log("Home Called =========>")
   useEffect(() => {
     // Call loadData when the component mounts
     try {
-      let response = fetch("http://localhost:5000/api/foodData", {
+      fetch("http://localhost:5000/api/foodData", {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
         }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          setFoodCat(data.categories)
+          setFoodItem(data.items)
+        }
       });
-
-      if (response.ok) {
-        const responseData = response.json();
-        console.log("Food data from API")
-        // console.log(responseData[0], responseData[1]);
-
-        // Set your state variables based on responseData[0] and responseData[1]
-        setFoodCat(responseData[0]);
-        setFoodItem(responseData[1]);
-        console.log("food cat")
-        console.log(foodCat.length)
-        console.log(foodCat)
-        console.log("food cat items")
-        console.log(foodItem.length)
-        console.log(foodItem)
-      } else {
-        console.error('Failed to fetch data');
-      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   }, []);
-  // console.log("food cat")
-  // console.log(foodCat.length)
-  // console.log(foodCat)
-  // console.log("food cat items")
-  // console.log(foodItem.length)
-  // console.log(foodItem)
   return (
     <div>
       <div><NavBar /></div>
-
       <div><Carousel /></div>
-
-      <div className='container'>
-        
+      <div className='container'>        
         {
-          
           foodCat.length > 0
             ? foodCat.map((data) => {
               return (
                 <div className='row mb-3' key={data._id}>
                   <div className='fs-3 m-3'>
                     {data.CategoryName}
-                    <Card></Card>
                   </div>
                   <hr  />
                    
-                  {foodItem.length > 0 ? foodItem.filter(
-                    (Item) => Item.CategoryName === data.CategoryName)
+                  {foodItem.length > 0 ? foodItem
+                    .filter((Item) => Item.CategoryName === data.CategoryName)
                     .map(filterItem => {
                       return (
                         <div key={filterItem._id} className='col-12 col-md-6 col-lg-3'>
                           {console.log(filterItem.url)} 
-                           <Card  ></Card> 
+                           <Card data={filterItem}></Card> 
                           
                          </div>
                       )
@@ -194,8 +142,9 @@ export default function Home() {
             : ""
         }         
       </div>
-
-      <div> <Footer /> </div>
+      <div>
+        <Footer />
+      </div>
     </div>
   )
 }

@@ -1,14 +1,15 @@
 import React from 'react'
 
-export default function card() {
+export default function card(props) {
+  const { CategoryName, description, img, name } = props.data;
   return (
     <div>
       <div>
         <div className="card mt-3" style={{"width": "18rem"}}>
-            <img src="https://source.unsplash.com/random/300×180/?bread" class="card-img-top" alt="..."/>
+            <img src={img} className="card-img-top" alt="..."/>
             <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">sample text for card.</p>
+              <h5 className="card-title">{name}</h5>
+              <p className="card-text">{description}</p>
               <div className='container w-100'>
                   <select className="m-2 h-100 bg-success rounded" >
                     {
