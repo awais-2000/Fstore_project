@@ -34,6 +34,9 @@ app.use('/api', require('./Routes/newUser.js'))
 // define a Get routes
 app.use('/api', require('./Routes/DisplayData.js'))
 
+// define a Post routes
+app.use('/api', require('./Routes/OrderData.js'))
+
 // Start the Express server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -5,6 +5,7 @@ const mongoURI = 'mongodb+srv://Awais:awaiisi121@cluster0.a1udvyj.mongodb.net/fo
 
 /**
  * Connect to the MongoDB database using Mongoose.
+ * 
  */
 const connectDB = async () => {
   try {

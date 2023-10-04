@@ -1,90 +1,11 @@
-// import React, { useEffect, useState } from 'react';
-// import NavBar from '../components/NavBar';
-// import Footer from '../components/Footer';
-// import Card from '../components/card'; 
-// import Carousel from '../components/carousel';
-
-// export default function Home() {
-
-//   const [foodCat, setfoodCat] = useState([]);
-//   const [foodItem, setfoodItem] = useState([]);
-
-//   const loadData = async () => {
-//     try {
-//       let response = await fetch("http://localhost:5000/api/foodData", {
-//         method: "GET",
-//         headers: {
-//           'Content-Type': 'application/json'
-//         }
-//       });
-
-//       if (response.ok) {
-//         const responseData = await response.json();
-//         console.log(responseData[0], responseData[1]);
-
-//         // Set your state variables based on responseData[0] and responseData[1]
-//         setfoodCat(responseData[0]);
-//         setfoodItem(responseData[1]);
-//       } else {
-//         console.error('Failed to fetch data');
-//       }
-//     } catch (error) {
-//       console.error('Error fetching data:', error);
-//     }
-//   }
-
-//   useEffect(() => {
-//     // Call loadData when the component mounts
-//     loadData();
-//   }, []);
-
-//   return (
-//     <div>
-//       <div><NavBar /></div>
-
-//       <div><Carousel /></div>
-
-//       <div className='container'>
-//         {
-//           foodCat !== []
-//             ? foodCat.map((data) => {
-//               return (
-
-//                 // justify-content-center
-//                 <div className='row mb-3'>
-//                   <div key={data.id} className='fs-3 m-3'>
-//                     {data.CategoryName}
-//                   </div>
-//                   <hr id="hr-success" style={{ height: "4px", backgroundImage: "-webkit-linear-gradient(left,rgb(0, 255, 137),rgb(0, 0, 0))" }} />
-//                   {foodItem !== [] ? foodItem.filter(
-//                     (items) => (items.CategoryName === data.CategoryName))
-//                     .map(filterItems => {
-//                       return (
-//                         <div key={filterItems.id} className='col-12 col-md-6 col-lg-3'>
-//                           {console.log(filterItems.url)}
-//                           <Card foodName={filterItems.name} item={filterItems} options={filterItems.options[0]} ImgSrc={filterItems.img} ></Card>
-//                         </div>
-//                       )
-//                     }) : <div> No Such Data </div>}
-//                 </div>
-//               )
-//             })
-//             : ""
-//         }
-//       </div>
-
-//       <div> <Footer /> </div>
-//     </div>
-//   )
-// }
 import React, { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Card from '../components/card';
-import Carousel from '../components/carousel';
+
 
 export default function Home() {
-
+  const [search, setSearch] = useState('');
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
 
@@ -112,7 +33,37 @@ export default function Home() {
   return (
     <div>
       <div><NavBar /></div>
-      <div><Carousel /></div>
+      <div>
+        <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !important" }}>
+        <div className="carousel-inner" id='carousel'>
+
+          <div className="carousel-caption" style={{ zIndex: "10" }}>
+            <div className="d-flex justify-content-center "> 
+                {/* Search function . When User search the item in search bar this function will run.   */}
+                <input className="form-control me-2 " type="search" placeholder="Search" aria-label="Search"  value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+              {/* <button className="btn btn-outline-success" type="submit">Search</button> */} 
+            </div>
+          </div>
+          <div className="carousel-item active">
+            <img src="https://source.unsplash.com/random/900×700/?burger" className="d-block w-100" style={{ filter: "brightness(50%)" , objectFit : "contain ! important" }}  alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src="https://source.unsplash.com/random/900×700/?pastry" className="d-block w-100" style={{ filter: "brightness(50%)", objectFit: "contain ! important" }} alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src="https://source.unsplash.com/random/900×700/?barbeque" className="d-block w-100" style={{ filter: "brightness(50%)", objectFit: "contain ! important" }} alt="..." />
+          </div>
+        </div>
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div> 
+      </div>
       <div className='container'>        
         {
           foodCat.length > 0
@@ -125,12 +76,12 @@ export default function Home() {
                   <hr  />
                    
                   {foodItem.length > 0 ? foodItem
-                    .filter((Item) => Item.CategoryName === data.CategoryName)
+                    .filter((Item) => Item.CategoryName === data.CategoryName && Item.name.toLowerCase().includes(search.toLowerCase())) 
                     .map(filterItem => {
                       return (
                         <div key={filterItem._id} className='col-12 col-md-6 col-lg-3'>
                           {console.log(filterItem.url)} 
-                           <Card data={filterItem}></Card> 
+                           <Card data={filterItem} options = { filterItem.options[0]} imgSrc = { filterItem.img } ></Card> 
                           
                          </div>
                       )
@@ -150,36 +101,3 @@ export default function Home() {
 }
 
 
-// ------------------------------- Actuall Data
-
-// <div className='container'>
-  
-//     foodCat !== []
-//     ? foodCat.map((data) =>{
-//       return (
-//         <div>
-//           <div key={data._id} className='fs-3 m-3'>
-//             {data.CategoryName}
-//           </div>
-//           <hr />
-//           {
-//             foodItem !==[]
-//             ?
-//             foodItem.filter((item) => item.CategoryName === data.CategoryName)
-//             .map(filterItem =>{
-//               return (
-//                 <div key={filterItem._id}>
-//                   <Card />
-//                 </div>
-//               )
-//             }) : <div>No Such Data</div>
-//           }
-//         </div>
-//       )
-//     })
-  
-
-// </div>
-
-//-------------------------------
-//foodName = { filterItem.name } Item = { filterItem } options = { filterItem.options[0] } ImgSrc = { filterItem.img }
