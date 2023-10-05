@@ -20,7 +20,10 @@ const reducer = (state, action) => {
         case "REMOVE":
             let newArr = [...state]
             newArr.splice(action.index, 1)
-            return newArr;
+            return state.filter((item, index) => index !== action.index);;
+
+
+
 
         case "UPDATE":
             let arr = [...state]
@@ -29,11 +32,22 @@ const reducer = (state, action) => {
                     console.log(food.qty, parseInt(action.qty), action.price + food.price)
                     arr[index] = { ...food, qty: parseInt(action.qty) + food.qty, price: action.price + food.price }
                 }
-                return arr;
+                return state.map((food) => {
+                    if (food.id === action.id) {
+                        return { ...food, qty: parseInt(action.qty) + food.qty, price: action.price + food.price };
+                    }
+                    return food;
+                });
             })
             return arr;
 
-        case "DROP" :
+
+
+
+
+
+
+        case "DROP":
             let empArray = []
             return empArray;
 

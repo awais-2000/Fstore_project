@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
-    emails: {
+    email: {
         type: String,
         required: true,
         unique: true
@@ -12,6 +12,7 @@ const OrderSchema = new Schema({
         required: true
     }
 });
+
 
 const Order = mongoose.model('Order', OrderSchema);
 
