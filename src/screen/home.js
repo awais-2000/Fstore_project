@@ -9,7 +9,6 @@ export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
 
-  console.log("Home Called =========>")
   useEffect(() => {
     // Call loadData when the component mounts
     try {
@@ -83,9 +82,7 @@ export default function Home() {
                     .map(filterItem => {
                       return (
                         <div key={filterItem._id} className='col-12 col-md-6 col-lg-3'>
-                          {console.log(filterItem.url)} 
-                           <Card data={filterItem} options = { filterItem.options[0]} imgSrc = { filterItem.img } ></Card> 
-                          
+                           <Card data={filterItem}></Card>                           
                          </div>
                       )
                     }) : <div> No Such Data </div>

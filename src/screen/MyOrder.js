@@ -1,115 +1,16 @@
-// import React, { useEffect, useState } from 'react'
-// import Footer from '../components/Footer';
-// import NavBar from '../components/Navbar';
-
-// export default function MyOrder() {
-
-//     const [orderData, setorderData] = useState({})
-
-//     const fetchMyOrder = async () => {
-//         console.log(localStorage.getItem('userEmail'))
-//         await fetch("http://localhost:5000/api/auth/myOrderData", {
-//             // credentials: 'include',
-//             // Origin:"http://localhost:3000/login",
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 email: localStorage.getItem('userEmail')
-//             })
-//         }).then(async (res) => {
-//             let response = await res.json()
-//             await setorderData(response)
-//         })
-
-
-
-//         // await res.map((data)=>{
-//         //    console.log(data)
-//         // })
-
-
-//     }
-
-//     useEffect(() => {
-//         fetchMyOrder()
-//     }, [])
-
-//     return (
-//         <div>
-//             <div>
-//                 <NavBar />
-//             </div>
-
-//             <div className='container'>
-//                 <div className='row'>
-
-//                     {orderData !== {} ? Array(orderData).map(data => {
-//                         return (
-//                             data.orderData ?
-//                                 data.orderData.order_data.slice(0).reverse().map((item) => {
-//                                     return (
-//                                         item.map((arrayData) => {
-//                                             return (
-//                                                 <div  >
-//                                                     {arrayData.Order_date ? <div className='m-auto mt-5'>
-
-//                                                         {data = arrayData.Order_date}
-//                                                         <hr />
-//                                                     </div> :
-
-//                                                         <div className='col-12 col-md-6 col-lg-3' >
-//                                                             <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
-//                                                                 <img src={arrayData.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
-//                                                                 <div className="card-body">
-//                                                                     <h5 className="card-title">{arrayData.name}</h5>
-//                                                                     <div className='container w-100 p-0' style={{ height: "38px" }}>
-//                                                                         <span className='m-1'>{arrayData.qty}</span>
-//                                                                         <span className='m-1'>{arrayData.size}</span>
-//                                                                         <span className='m-1'>{data}</span>
-//                                                                         <div className=' d-inline ms-2 h-100 w-20 fs-5' >
-//                                                                             Pkr{arrayData.price}/-
-//                                                                         </div>
-//                                                                     </div>
-//                                                                 </div>
-//                                                             </div>
-
-//                                                         </div>
-
-
-
-//                                                     }
-
-//                                                 </div>
-//                                             )
-//                                         })
-
-//                                     )
-//                                 }) : ""
-//                         )
-//                     }) : ""}
-//                 </div>
-
-
-//             </div>
-
-//             <Footer />
-//         </div>
-//     )
-// }
-// {"orderData":{"_id":"63024fd2be92d0469bd9e31a","email":"mohanDas@gmail.com","order_data":[[[{"id":"62ff20fbaed6a15f800125e9","name":"Chicken Fried Rice","qty":"4","size":"half","price":520},{"id":"62ff20fbaed6a15f800125ea","name":"Veg Fried Rice","qty":"4","size":"half","price":440}],"2022-08-21T15:31:30.239Z"],[[{"id":"62ff20fbaed6a15f800125f4","name":"Mix Veg Pizza","qty":"4","size":"medium","price":800},{"id":"62ff20fbaed6a15f800125f3","name":"Chicken Doub;e Cheeze Pizza","qty":"4","size":"regular","price":480}],"2022-08-21T15:32:38.861Z"]],"__v":0}}
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import NavBar from '../components/NavBar';
 
 export default function MyOrder() {
-    const [orderData, setOrderData] = useState({});
+    // const [orderData, setOrderData] = useState([]);
+    const [orderDataArr, setOrderDataArr] = useState([]);
+    const [orderDate, setOrderDate] = useState("")
 
-    const fetchMyOrder = async () => {
+    useEffect(() => {
         const userEmail = localStorage.getItem('userEmail');
         try {
-            const response = await fetch('http://localhost:5000/api/auth/myOrderData', {
+            fetch('http://localhost:5000/api/myOrderData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -117,22 +18,34 @@ export default function MyOrder() {
                 body: JSON.stringify({
                     email: userEmail,
                 }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                generateData(data.orderData[0].order_data)
             });
-            if (response.ok) {
-                const data = await response.json();
-                setOrderData(data.orderData || {});
-            } else {
-                console.error('Failed to fetch order data');
-            }
+
         } catch (error) {
             console.error('Error during fetchMyOrder:', error);
         }
-    };
-
-    useEffect(() => {
-        fetchMyOrder();
     }, []);
 
+    function generateData(updatedOrderData) {
+        if(updatedOrderData.length > 0) {
+            updatedOrderData.map((arrayOfObjects) => {
+                const dataArr = [];
+                for (const obj of arrayOfObjects) {
+                    if(obj.Order_date){
+                        setOrderDate(obj.Order_date)
+                    } else {
+                        dataArr.push(obj)
+                    }                    
+                }
+                setOrderDataArr(dataArr);
+            })
+        }
+    }
+    
+    
     return (
         <div>
             <div>
@@ -141,31 +54,27 @@ export default function MyOrder() {
 
             <div className='container'>
                 <div className='row'>
-                    {Object.keys(orderData).length > 0 &&
-                        orderData.order_data.map(([items, orderDate]) => (
-                            <div key={orderDate}>
-                                <div className='m-auto mt-5'>
-                                    {orderDate}
-                                    <hr />
-                                </div>
-                                {items.map((arrayData) => (
-                                    <div className='col-12 col-md-6 col-lg-3' key={arrayData.id}>
-                                        <div className='card mt-3' style={{ width: '16rem', maxHeight: '360px' }}>
-                                            <img src={arrayData.img} className='card-img-top' alt='...' style={{ height: '120px', objectFit: 'fill' }} />
-                                            <div className='card-body'>
-                                                <h5 className='card-title'>{arrayData.name}</h5>
-                                                <div className='container w-100 p-0' style={{ height: '38px' }}>
-                                                    <span className='m-1'>{arrayData.qty}</span>
-                                                    <span className='m-1'>{arrayData.size}</span>
-                                                    <span className='m-1'>{orderDate}</span>
-                                                    <div className='d-inline ms-2 h-100 w-20 fs-5'>Pkr{arrayData.price}/-</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                <div className='m-auto mt-5'>
+                    {orderDate}
+                    <hr />
+                </div>
+                {orderDataArr.length > 0 && 
+                    orderDataArr.map((obj) => (
+                        <div className='col-3 col-md-3 col-lg-3' key={obj.id}>
+                            <div className='card mt-3' style={{ width: '16rem', maxHeight: '360px' }}>
+                                <img src={obj.img} className='card-img-top' alt='...' style={{ height: '120px', objectFit: 'fill' }} />
+                                <div className='card-body'>
+                                    <h5 className='card-title'>{obj.name}</h5>
+                                    <div className='container w-100 p-0' style={{ height: '38px' }}>
+                                        <span className='m-1'>{obj.qty}</span>
+                                        <span className='m-1'>{obj.size}</span>
+                                        <div className='d-inline ms-2 h-100 w-20 fs-5'>Pkr{obj.price}/-</div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-                        ))}
+                        </div>
+                    ))
+                }
                 </div>
             </div>
 

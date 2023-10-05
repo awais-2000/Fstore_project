@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatchCart, useCart } from './contexReducer';
 
 export default function Card(props) {
-
   const dispatch = useDispatchCart();
   const data = useCart();
   const priceRef = useRef();
   const {  description, img, name } = props.data;
 
-  const options = props.options;
+  const options = props.data.options[0];
   const priceOptions = Object.keys(options);
 
   const [qty, setQty] = useState(1);
@@ -28,14 +27,35 @@ export default function Card(props) {
 
     if (food !== null) { // Check if 'food' is not null
       if  (food.size === size) {
-        await dispatch({ type: "UPDATE", id: data._id, price: finalPrice, qty: qty });
+        await dispatch({ 
+          type: "UPDATE",
+          id: data._id,
+          price: finalPrice,
+          qty: qty 
+        });
         return; 
       } else { // Handle the case when 'food' is not null but 'size' doesn't match
-        await dispatch({ type: "ADD", id: data._id, name:data.name, price: finalPrice, qty: qty, size: size });
+        await dispatch({ 
+          type: "ADD", 
+          id: data._id,
+          name: props.data.name,
+          img: props.data.img,
+          price: finalPrice,
+          qty: qty,
+          size: size
+        });
         return; 
       }
     } else { // Use 'else' to handle the case when 'food' is null
-      await dispatch({ type: "ADD", id:data._id, name: data.name, price: finalPrice, qty: qty, size: size });
+      await dispatch({ 
+        type: "ADD", 
+        id: data._id,
+        name: props.data.name,
+        img: props.data.img,
+        price: finalPrice,
+        qty: qty,
+        size: size
+       });
       return;
     }
     
