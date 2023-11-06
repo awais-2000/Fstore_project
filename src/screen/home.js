@@ -33,13 +33,13 @@ export default function Home() {
     <div>
       <div><NavBar /></div>
       <div>
-        <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !important" }}>
+        <div id="carouselExampleFade" className="carousel slide carousel-fade " data-bs-ride="carousel"  style={{ objectFit: "contain !important" }}>
         <div className="carousel-inner" id='carousel'>
 
           <div className="carousel-caption" style={{ zIndex: "10" }}>
             <div className="d-flex justify-content-center "> 
                 {/* Search function . When User search the item in search bar this function will run.   */}
-                <input className="form-control me-2 " type="search" placeholder="Search" aria-label="Search"  value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+                <input className="form-control me-2 " type="search" placeholder="Search Your Items" aria-label="Search"  value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
               {/* <button className="btn btn-outline-success" type="submit">Search</button> */} 
             </div>
           </div>

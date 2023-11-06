@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/foodData', (req, res) => { // (7)
+router.get('/foodData', (req, res) => {
     try {
-        // console.log(global.food_items) // (8)
+        
         const response = {
             "categories": global.foodCategory,
             "items": global.food_items

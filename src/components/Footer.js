@@ -1,18 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 export default function Footer() {
   return (
     <div>
-      <div><footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div className="col-md-4 d-flex align-items-center">
-      <Link to="/" className="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        
-      </Link>
-          <span className="text-muted">© 2021 FoodStore, Inc</span>
-    </div>
-
-    
-  </footer></div>
+      
+    <footer class="bg-success p-2 text-center" >
+        <div class="container">
+            <p class="text-white">All Right Reserved © 2023 FoodStore, Inc</p>
+        </div>
+    </footer>
+  
     </div>
   )
 }

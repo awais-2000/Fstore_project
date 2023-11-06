@@ -21,6 +21,9 @@ export default function MyOrder() {
             })
             .then(response => response.json())
             .then(data => {
+                console.log("get data");
+                console.log(data)
+
                 generateData(data.orderData[0].order_data)
             });
 
@@ -29,21 +32,39 @@ export default function MyOrder() {
         }
     }, []);
 
+    // function generateData(updatedOrderData) {
+    //     if(updatedOrderData.length > 0) {
+    //         updatedOrderData.map((arrayOfObjects) => {
+    //             const dataArr = [];
+    //             for (const obj of arrayOfObjects) {
+    //                 if(obj.Order_date){
+    //                     setOrderDate(obj.Order_date)
+    //                 } else {
+    //                     dataArr.push(obj)
+    //                 }                    
+    //             }
+    //             setOrderDataArr(dataArr);
+    //         })
+    //     }
+    // }
     function generateData(updatedOrderData) {
-        if(updatedOrderData.length > 0) {
-            updatedOrderData.map((arrayOfObjects) => {
-                const dataArr = [];
-                for (const obj of arrayOfObjects) {
-                    if(obj.Order_date){
-                        setOrderDate(obj.Order_date)
-                    } else {
-                        dataArr.push(obj)
-                    }                    
-                }
-                setOrderDataArr(dataArr);
-            })
-        }
-    }
+  const dataArr = [];
+  let orderDate = "";
+
+  updatedOrderData.forEach((arrayOfObjects) => {
+    arrayOfObjects.forEach((obj) => {
+      if (obj.Order_date) {
+        orderDate = obj.Order_date;
+      } else {
+        dataArr.push(obj);
+      }
+    });
+  });
+
+  setOrderDataArr(dataArr);
+  setOrderDate(orderDate);
+}
+
     
     
     return (

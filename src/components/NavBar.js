@@ -1,10 +1,11 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { Badge } from 'react-bootstrap';
-import Model from '../Model'; // Corrected the import name to match the file name (e.g., '../model' should be '../model')
+import Model from '../Model';
 import Cart from '../screen/Cart';
 import React, { useState } from 'react';
-import { useCart } from './contexReducer'; // Import useCart from the correct path
+import { useCart } from './contexReducer'; 
+import './navbar.css'
 
 
 export default function NavBar() {
@@ -19,9 +20,9 @@ export default function NavBar() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-success bg-gradient">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-success bg-gradient fixed-top">
         <div className="container-fluid">
-          <Link className="navbar-brand fs-1 fst-italic" to="/">FoodStore</Link>
+          <Link className="navbar-brand fs-1 fst-italic p-3" to="/"><span class="text-warning p-1">Food</span>Store</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -36,9 +37,9 @@ export default function NavBar() {
             </div>
             {/* When the user logs in, this NavBar will be displayed */}
             {(!localStorage.getItem("authToken")) ?
-              <div className='d-flex'>
-                <Link className="btn bg-white text-success mx-1" to="/login">Login</Link>
-                <Link className="btn bg-white text-success mx-1" to="/newUser">SignUp</Link>
+              <div className='d-flex '>
+                <Link className="btn bg-white custom-button mx-1 " to="/login">Login</Link>
+                <Link className="btn bg-white custom-button mx-1" to="/newUser">SignUp</Link>
               </div>
               :
               <div>
