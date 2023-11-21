@@ -21,7 +21,7 @@ export default function NavBar() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-success bg-gradient fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand fs-1 fst-italic p-3" to="/">
-            <span class="text-warning p-1">Food</span>Store
+            <span className="text-warning p-1">Food</span>Store
           </Link>
           {/* <button
             className="navbar-toggler"
@@ -35,15 +35,15 @@ export default function NavBar() {
             <span className="navbar-toggler-icon"></span>
           </button> */}
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav me-auto  mb-2">

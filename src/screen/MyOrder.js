@@ -21,10 +21,10 @@ export default function MyOrder() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("get data");
-          console.log(data);
-
-          generateData(data.orderData[0].order_data);
+          if (data.orderData[0]) {
+            generateData(data.orderData[0].order_data);
+          }
+          
         });
     } catch (error) {
       console.error("Error during fetchMyOrder:", error);
@@ -104,35 +104,38 @@ export default function MyOrder() {
             {orderDate}
             <hr />
           </div>
-          {orderDataArr.length > 0 &&
-            orderDataArr.map((obj) => (
-              <div className="col-3 col-md-3 col-lg-3" key={obj.id}>
-                <div
-                  className="card mt-3"
-                  style={{ width: "16rem", maxHeight: "360px" }}
-                >
-                  <img
-                    src={obj.img}
-                    className="card-img-top"
-                    alt="..."
-                    style={{ height: "120px", objectFit: "fill" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{obj.name}</h5>
-                    <div
-                      className="container w-100 p-0"
-                      style={{ height: "38px" }}
-                    >
-                      <span className="m-1">{obj.qty}</span>
-                      <span className="m-1">{obj.size}</span>
-                      <div className="d-inline ms-2 h-100 w-20 fs-5">
-                        Pkr{obj.price}/-
+          {
+            orderDataArr.length > 0 ?
+              orderDataArr.map((obj) => (
+                <div className="col-3 col-md-3 col-lg-3" key={obj.id}>
+                  <div
+                    className="card mt-3"
+                    style={{ width: "16rem", maxHeight: "360px" }}
+                  >
+                    <img
+                      src={obj.img}
+                      className="card-img-top"
+                      alt="..."
+                      style={{ height: "120px", objectFit: "fill" }}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{obj.name}</h5>
+                      <div
+                        className="container w-100 p-0"
+                        style={{ height: "38px" }}
+                      >
+                        <span className="m-1">{obj.qty}</span>
+                        <span className="m-1">{obj.size}</span>
+                        <div className="d-inline ms-2 h-100 w-20 fs-5">
+                          Pkr{obj.price}/-
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+              : <h3 style={{marginTop: "40px"}}>No order found</h3>
+          }
         </div>
       </div>
 

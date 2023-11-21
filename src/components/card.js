@@ -5,7 +5,7 @@ export default function Card(props) {
   const dispatch = useDispatchCart();
   const data = useCart();
   const priceRef = useRef();
-  const {  description, img, name } = props.data;
+  const {  description, img, name, _id: itemId } = props.data;
 
   const options = props.data.options[0];
   const priceOptions = Object.keys(options);
@@ -19,17 +19,16 @@ export default function Card(props) {
     let food = null; // Initialize 'food' as null
 
     for (const item of data) {
-      if (item.id === data._id) {
+      if (item.id === itemId) {
         food = item; // Assign 'item' to 'food' if a matching item is found
         break;
       }
     }
-
     if (food !== null) { // Check if 'food' is not null
       if  (food.size === size) {
         await dispatch({ 
           type: "UPDATE",
-          id: data._id,
+          id: itemId,
           price: finalPrice,
           qty: qty 
         });
@@ -37,7 +36,7 @@ export default function Card(props) {
       } else { // Handle the case when 'food' is not null but 'size' doesn't match
         await dispatch({ 
           type: "ADD", 
-          id: data._id,
+          id: itemId,
           name: props.data.name,
           img: props.data.img,
           price: finalPrice,
@@ -49,7 +48,7 @@ export default function Card(props) {
     } else { // Use 'else' to handle the case when 'food' is null
       await dispatch({ 
         type: "ADD", 
-        id: data._id,
+        id: itemId,
         name: props.data.name,
         img: props.data.img,
         price: finalPrice,
