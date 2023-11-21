@@ -25,7 +25,7 @@ router.post('/orderData', async (req, res) => {
             await Order.findOneAndUpdate(
                 { email: req.body.email },
                 { $push: { order_data: data } }
-            ).then(() => {
+            ).then(() => { 
                 res.json({ success: true });
             });
         } catch (error) {

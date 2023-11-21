@@ -78,8 +78,8 @@ export default function Signup() {
 
                                             {/* <!-- Name input --> */}
                                             <div className="form-outline mb-4">
-                                                <input type="text" id="form3Example3" className="form-control" name='name' value={credentials.name} onChange={onChange} placeholder="Enter Your Name" />
-                                                <label className="form-label" htmlFor="form3Example3">Your Name</label>
+                                                <input type="text" id="form3Example3" className="form-control" name='name' value={credentials.name} onChange={onChange} placeholder="Enter Your Full Name" />
+                                                <label className="form-label" htmlFor="form3Example3">Your Full Name</label>
                                             </div>
 
                                             {/* <!-- Email input --> */}

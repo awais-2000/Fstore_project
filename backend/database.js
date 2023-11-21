@@ -1,11 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // MongoDB URI (Uniform Resource Identifier) - Replace with your actual MongoDB URI.
-const mongoURI = 'mongodb+srv://Awais:awaiisi121@cluster0.a1udvyj.mongodb.net/foodstore?retryWrites=true&w=majority';
+const mongoURI =
+  "mongodb+srv://Awais:awaiisi121@cluster0.a1udvyj.mongodb.net/foodstore?retryWrites=true&w=majority";
 
 /**
  * Connect to the MongoDB database using Mongoose.
- * 
+ *
  */
 const connectDB = async () => {
   try {
@@ -16,12 +17,18 @@ const connectDB = async () => {
     });
 
     // If the connection is successful, log a success message.
-    console.log('Connected to MongoDB');
+    console.log("Connected to MongoDB");
 
     // Fetch data from the "food_items" collection within the connected database.
     // The `await` keyword ensures that this operation is asynchronous and waits for it to complete.
-    const fetchedData = await mongoose.connection.db.collection('food_items').find({}).toArray(); // (1)
-    const foodCategory = await mongoose.connection.db.collection('foodCategory').find({}).toArray(); // (2)
+    const fetchedData = await mongoose.connection.db
+      .collection("food_items")
+      .find({})
+      .toArray(); // (1)
+    const foodCategory = await mongoose.connection.db
+      .collection("foodCategory")
+      .find({})
+      .toArray(); // (2)
 
     // console.log("Fetched data ===>")
     // console.log(fetchedData)
@@ -33,9 +40,8 @@ const connectDB = async () => {
     // console.log('Fetched foodCategory:', global.foodCategory); // (6)
   } catch (error) {
     // If an error occurs during the connection or data fetching, log the error message.
-    console.error('Error connecting to MongoDB:', error);
+    console.error("Error connecting to MongoDB:", error);
   }
 };
-
 
 module.exports = connectDB;
